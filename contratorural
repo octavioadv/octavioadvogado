@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa Mental com IA: Analisador de Contratos V10</title>
+    <!-- Tailwind CSS para estilização -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Ícone para o botão flutuante -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Estilo base para a página */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* bg-slate-50 */
+        }
+        /* Estilo para as setas indicando o fluxo */
+        .flow-arrow::after {
+            content: '↓';
+            display: block;
+            text-align: center;
+            font-size: 2rem;
+            color: #64748b; /* text-slate-500 */
+            margin: 1rem 0;
+        }
+        /* Animação de carregamento */
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Estilos para o container de artigos expansível */
+        .articles-container {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: max-height 0.7s ease-in-out, opacity 0.5s ease-in-out, margin-top 0.5s ease;
+            border-radius: 0 0 0.75rem 0.75rem; /* rounded-b-xl */
+        }
+
+        .articles-container.show {
+            max-height: 400px; /* Altura máxima para a área dos artigos */
+            overflow-y: auto;  /* Habilita a barra de rolagem vertical */
+            opacity: 1;
+            margin-top: -1px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        /* Estilo da Barra de Rolagem */
+        .articles-container::-webkit-scrollbar {
+            width: 10px;
+        }
+        .articles-container::-webkit-scrollbar-track {
+            background: transparent;
+            margin: 10px 0;
+        }
+        .articles-container::-webkit-scrollbar-thumb {
+            background-color: #cbd5e1; /* Cor da barra */
+            border-radius: 20px;
+            border: 3px solid #fff; /* Espaçamento em volta da barra */
+        }
+        .articles-container::-webkit-scrollbar-thumb:hover {
+            background-color: #94a3b8;
+        }
+
+        /* Layout Criativo para o Conteúdo do Artigo */
+        .article-content h4 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #1e3a8a; /* text-blue-900 */
+            background-color: #eff6ff; /* bg-blue-50 */
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 0.75rem;
+            border-left: 4px solid #2563eb; /* border-blue-600 */
+        }
+        .article-content p {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #334155; /* text-slate-700 */
+            padding: 0 1rem;
+        }
+        .article-content > div:not(:last-child) {
+             margin-bottom: 1.5rem;
+             padding-bottom: 1.5rem;
+             border-bottom: 1px dashed #e2e8f0; /* Separador entre artigos */
+        }
+    </style>
+</head>
+<body class="text-slate-800">
+
+    <div class="container mx-auto p-4 md:p-8">
+
+        <!-- Título e Seções Iniciais -->
+        <header class="text-center mb-10">
+            <h1 class="text-3xl md:text-4xl font-bold text-slate-900">Mapa Mental Interativo: Natureza Jurídica do Contrato</h1>
+            <p class="mt-2 text-lg text-slate-600">Um guia funcional para determinar o regime jurídico aplicável.</p>
+        </header>
+        <section class="mb-10">
+            <div class="bg-white border-2 border-slate-200 rounded-xl shadow-lg p-6 max-w-4xl mx-auto">
+                <h2 class="text-2xl font-bold text-center text-blue-600 mb-6">PONTO DE PARTIDA: Analisar o Objeto do Contrato</h2>
+                <div class="grid md:grid-cols-2 gap-6 text-center">
+                    <div class="bg-slate-50 rounded-lg p-4">
+                        <h3 class="font-semibold text-lg mb-2">1. Qual a FINALIDADE da cessão?</h3>
+                        <div class="space-y-2"><p><strong>Residencial:</strong> Destinado à moradia.</p><p><strong>Comercial/Não Residencial:</strong> Atividades económicas.</p></div>
+                    </div>
+                    <div class="bg-slate-50 rounded-lg p-4">
+                        <h3 class="font-semibold text-lg mb-2">2. Qual a LOCALIZAÇÃO do imóvel?</h3>
+                        <div class="space-y-2"><p><strong>Urbano:</strong> Perímetro urbano.</p><p><strong>Rural:</strong> Fora do perímetro urbano.</p></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="flow-arrow"></div>
+
+        <!-- Fluxo de Análise com Cards Atualizados -->
+        <main class="grid lg:grid-cols-2 gap-8 lg:gap-12">
+            <!-- COLUNA A: FINS RESIDENCIAIS -->
+            <div class="space-y-8">
+                <h2 class="text-2xl font-bold text-center bg-green-600 text-white py-2 rounded-lg shadow-md">A: IMÓVEL PARA FINS RESIDENCIAIS</h2>
+                <div class="shadow-lg rounded-xl bg-white">
+                    <article class="rounded-t-xl transition-shadow duration-300 flex flex-col">
+                        <header class="bg-slate-100 p-4 rounded-t-xl border-b"><h3 class="font-bold text-xl">A.1. Imóvel RESIDENCIAL em área URBANA</h3></header>
+                        <div class="p-6 space-y-4 flex-grow"><p><strong class="text-slate-600">Análise:</strong> A destinação é moradia em zona urbana.</p><div><p class="font-semibold">Legislação Principal:</p><p class="font-bold text-green-700">Lei nº 8.245/91 (Lei do Inquilinato)</p></div></div>
+                        <footer class="bg-green-100 text-green-800 p-4"><p class="font-bold text-center">Conclusão: Aplica-se a Lei do Inquilinato</p><button onclick="toggleArticles('Lei do Inquilinato', 'articles-1', this)" class="mt-2 w-full bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition-colors flex justify-center items-center"><span class="button-text">✨ Ver Artigos Pertinentes</span><div class="loader hidden ml-2" style="width: 20px; height: 20px; border-width: 2px;"></div></button></footer>
+                    </article>
+                    <div id="articles-1" class="articles-container border-x-2 border-b-2 border-green-200"></div>
+                </div>
+                <!-- A.2 ATUALIZADO -->
+                <div class="shadow-lg rounded-xl bg-white">
+                     <article class="rounded-t-xl transition-shadow duration-300 flex flex-col">
+                        <header class="bg-slate-100 p-4 rounded-t-xl border-b"><h3 class="font-bold text-xl">A.2. Imóvel RESIDENCIAL em área RURAL</h3></header>
+                        <div class="p-6 space-y-4 flex-grow">
+                            <p><strong class="text-slate-600">Análise:</strong> A finalidade residencial (moradia) prevalece sobre a localização geográfica do imóvel.</p>
+                            <div>
+                                <p class="font-semibold">Legislação Principal:</p>
+                                <p class="font-bold text-green-700">Lei do Inquilinato, com aplicação subsidiária do Código Civil</p>
+                            </div>
+                        </div>
+                        <footer class="bg-green-100 text-green-800 p-4 space-y-2">
+                            <p class="font-bold text-center">Conclusão: Aplica-se Lei do Inquilinato e subsidiariamente Código Civil</p>
+                            <button onclick="toggleArticles('InquilinatoRural', 'articles-2', this)" class="w-full bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition-colors flex justify-center items-center">
+                                <span class="button-text">✨ Ver Artigos Pertinentes</span>
+                                <div class="loader hidden ml-2" style="width: 20px; height: 20px; border-width: 2px;"></div>
+                            </button>
+                            <button onclick="toggleArticles('JurisprudenciaRural', 'articles-10', this)" class="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors flex justify-center items-center">
+                                <span class="button-text">✨ Ver Jurisprudência Pertinente</span>
+                                <div class="loader hidden ml-2" style="width: 20px; height: 20px; border-width: 2px;"></div>
+                            </button>
+                        </footer>
+                    </article>
+                    <div id="articles-2" class="articles-container border-x-2 border-b-2 border-green-200"></div>
+                    <div id="articles-10" class="articles-container border-x-2 border-b-2 border-blue-200"></div>
+                </div>
+            </div>
+            <!-- COLUNA B: FINS COMERCIAIS -->
+            <div class="space-y-8">
+                <h2 class="text-2xl font-bold text-center bg-orange-600 text-white py-2 rounded-lg shadow-md">B: IMÓVEL PARA FINS COMERCIAIS</h2>
+                <div class="shadow-lg rounded-xl bg-white">
+                    <article class="rounded-xl transition-shadow duration-300 flex flex-col">
+                        <header class="bg-slate-100 p-4 rounded-t-xl border-b"><h3 class="font-bold text-xl">B.1. Imóvel COMERCIAL em área URBANA</h3></header>
+                        <div class="p-6 space-y-4 flex-grow">
+                            <p><strong class="text-slate-600">Análise:</strong> Atividade económica preponderante define legislação aplicável.</p>
+                            <div><p class="font-semibold">Legislação Principal:</p><p class="font-bold text-green-700">Lei nº 8.245/91 (Lei do Inquilinato)</p><p class="font-semibold mt-2">Legislação pertinente para analisar:</p><p class="font-bold text-gray-700">Decreto-Lei 57/66 e Lei 5172/66 (CTN)</p></div>
+                            <div class="mt-4 space-y-4">
+                                <div class="p-4 bg-teal-50 border border-teal-200 rounded-lg"><h4 class="font-semibold text-teal-800">Atividade económica rural em zona urbana</h4><p class="text-sm text-slate-600 mt-1">Se a exploração do imóvel for extrativa vegetal, agrícola, pecuária ou agroindustrial, aplica-se o Estatuto da Terra, incidindo o ITR em vez do IPTU.</p><button onclick="toggleArticles('RuralEmUrbana', 'articles-9', this)" class="mt-2 w-full text-xs bg-teal-200 text-teal-800 py-1 px-2 rounded hover:bg-teal-300 transition-colors flex justify-center items-center"><span class="button-text">✨ Ver Artigos Pertinentes</span><div class="loader hidden ml-2" style="width: 12px; height: 12px; border-width: 2px;"></div></button></div>
+                                <div class="p-4 bg-sky-50 border border-sky-200 rounded-lg"><h4 class="font-semibold text-sky-800">Atividade económica não rural em zona urbana</h4><p class="text-sm text-slate-600 mt-1">Para todas as outras atividades comerciais (lojas, escritórios, etc.), aplica-se a Lei do Inquilinato (nº 8.245/91) para a locação não residencial.</p></div>
+                            </div>
+                        </div>
+                        <div id="articles-9" class="articles-container border-x-2 border-b-2 border-teal-200"></div>
+                    </article>
+                </div>
+                <div class="shadow-lg rounded-xl bg-white">
+                    <article class="rounded-t-xl transition-shadow duration-300 flex flex-col">
+                        <header class="bg-slate-100 p-4 rounded-t-xl border-b"><h3 class="font-bold text-xl">B.2. Imóvel COMERCIAL em área RURAL</h3></header>
+                        <div class="p-6 space-y-4 flex-grow"><p><strong class="text-slate-600">Análise:</strong> Cenário complexo que depende da atividade fim.</p><div class="bg-amber-50 border border-amber-200 rounded-lg p-4"><p class="font-semibold text-center text-amber-800">A atividade é de exploração agrícola, pecuária, etc.?</p><div class="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4"><div class="p-2 bg-green-50 rounded-md"><div class="text-center mb-2"><span class="font-bold text-lg text-green-600">SIM</span><p class="text-sm mt-1">Aplica-se o <strong class="block">Estatuto da Terra</strong></p></div><div class="space-y-3 p-2 border-t border-green-200"><div class="text-center"><p class="font-semibold text-green-800">Contrato de Parceria</p><p class="text-xs text-slate-500 mb-1">Partilha de riscos e lucros</p><button onclick="toggleArticles('Parceria Rural', 'articles-4', this)" class="w-full text-xs bg-green-200 text-green-800 py-1 px-2 rounded hover:bg-green-300 transition-colors flex justify-center items-center"><span class="button-text">✨ Ver Artigos</span><div class="loader hidden ml-2" style="width: 12px; height: 12px; border-width: 2px;"></div></button></div><div class="text-center"><p class="font-semibold text-green-800">Contrato de Arrendamento</p><p class="text-xs text-slate-500 mb-1">Pagamento de aluguer fixo</p><button onclick="toggleArticles('Arrendamento Rural', 'articles-6', this)" class="w-full text-xs bg-green-200 text-green-800 py-1 px-2 rounded hover:bg-green-300 transition-colors flex justify-center items-center"><span class="button-text">✨ Ver Artigos</span><div class="loader hidden ml-2" style="width: 12px; height: 12px; border-width: 2px;"></div></button></div></div></div><div class="text-center p-2 bg-red-50 rounded-md flex flex-col justify-center"><span class="font-bold text-lg text-red-600">NÃO</span><p class="text-sm mt-1">Aplica-se o <strong class="block">Código Civil</strong></p><button onclick="toggleArticles('Código Civil', 'articles-5', this)" class="mt-2 w-full text-xs bg-red-200 text-red-800 py-1 px-2 rounded hover:bg-red-300 transition-colors flex justify-center items-center"><span class="button-text">✨ Ver Artigos</span><div class="loader hidden ml-2" style="width: 12px; height: 12px; border-width: 2px;"></div></button></div></div></div></div>
+                        <footer class="bg-sky-100 text-sky-800 font-bold text-center p-4">Conclusão: A norma é definida pela ATIVIDADE FIM</footer>
+                    </article>
+                    <div id="articles-4" class="articles-container border-x-2 border-b-2 border-green-200"></div>
+                    <div id="articles-6" class="articles-container border-x-2 border-b-2 border-green-200"></div>
+                    <div id="articles-5" class="articles-container border-x-2 border-b-2 border-red-200"></div>
+                </div>
+            </div>
+        </main>
+        
+        <!-- SECÇÃO C -->
+        <div class="flow-arrow"></div>
+        <main class="grid lg:grid-cols-2 gap-8 lg:gap-12 mt-8">
+            <div class="space-y-8 lg:col-span-2"><h2 class="text-2xl font-bold text-center bg-purple-600 text-white py-2 rounded-lg shadow-md">C: OUTRAS MODALIDADES CONTRATUAIS</h2><div class="grid lg:grid-cols-2 gap-8"><div class="shadow-lg rounded-xl bg-white"><article class="rounded-t-xl transition-shadow duration-300 flex flex-col"><header class="bg-slate-100 p-4 rounded-t-xl border-b"><h3 class="font-bold text-xl">C.1 Contrato de Parceria</h3></header><div class="p-6 space-y-4 flex-grow"><p><strong class="text-slate-600">Análise:</strong> Contrato agrário com partilha de riscos e resultados entre as partes.</p><div><p class="font-semibold">Legislação Principal:</p><p class="font-bold text-purple-700">Estatuto da Terra e Decreto 59.566/66</p></div></div><footer class="bg-purple-100 text-purple-800 p-4"><p class="font-bold text-center">Conclusão: Regime específico de Direito Agrário</p><button onclick="toggleArticles('Requisitos Parceria', 'articles-7', this)" class="mt-2 w-full bg-purple-500 text-white py-2 px-4 rounded-lg hover:bg-purple-600 transition-colors flex justify-center items-center"><span class="button-text">✨ Ver Artigos</span><div class="loader hidden ml-2" style="width: 20px; height: 20px; border-width: 2px;"></div></button></footer></article><div id="articles-7" class="articles-container border-x-2 border-b-2 border-purple-200"></div></div><div class="shadow-lg rounded-xl bg-white"><article class="rounded-t-xl transition-shadow duration-300 flex flex-col"><header class="bg-slate-100 p-4 rounded-t-xl border-b"><h3 class="font-bold text-xl">C.2 Contrato de Arrendamento</h3></header><div class="p-6 space-y-4 flex-grow"><p><strong class="text-slate-600">Análise:</strong> Contrato agrário com pagamento de um valor fixo (aluguer) pelo uso da terra.</p><div><p class="font-semibold">Legislação Principal:</p><p class="font-bold text-purple-700">Estatuto da Terra e Decreto 59.566/66</p></div></div><footer class="bg-purple-100 text-purple-800 p-4"><p class="font-bold text-center">Conclusão: Regime específico de Direito Agrário</p><button onclick="toggleArticles('Requisitos Arrendamento', 'articles-8', this)" class="mt-2 w-full bg-purple-500 text-white py-2 px-4 rounded-lg hover:bg-purple-600 transition-colors flex justify-center items-center"><span class="button-text">✨ Ver Artigos</span><div class="loader hidden ml-2" style="width: 20px; height: 20px; border-width: 2px;"></div></button></footer></article><div id="articles-8" class="articles-container border-x-2 border-b-2 border-purple-200"></div></div></div></div>
+        </main>
+    </div>
+    
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        
+        function getMockArticles(lawName) {
+            let articlesHTML = '';
+            switch(lawName) {
+                case 'Lei do Inquilinato':
+                    articlesHTML = `<div><h4>Art. 1º</h4><p>A locação de imóvel urbano regula-se pelo disposto nesta lei...</p></div>`;
+                    break;
+                case 'Código Civil':
+                    articlesHTML = `<div><h4>Art. 565</h4><p>Na locação de coisas, uma das partes se obriga a ceder à outra...</p></div>`;
+                    break;
+                case 'Parceria Rural':
+                    articlesHTML = `<div><h4>Decreto 59.566/66 - Art. 4º</h4><p>Parceria rural é o contrato agrário pelo qual uma pessoa se obriga a ceder à outra, por tempo determinado ou não...</p></div>`;
+                    break;
+                case 'Arrendamento Rural':
+                     articlesHTML = `<div><h4>Estatuto da Terra - Art. 92</h4><p>A posse ou uso temporário da terra serão exercidos em virtude de contrato expresso ou tácito...</p></div>`;
+                    break;
+                case 'Requisitos Parceria':
+                    articlesHTML = `<div><h4>Decreto 59.566/66 - Art. 12</h4><p>Os contratos escritos deverão conter as seguintes indicações...</p></div>`;
+                    break;
+                case 'Requisitos Arrendamento':
+                    articlesHTML = `<div><h4>Artigo de Exemplo</h4><p>Este é um texto de exemplo para os requisitos do contrato de arrendamento.</p></div>`;
+                    break;
+                case 'RuralEmUrbana':
+                    articlesHTML = `<div><h4>Decreto-Lei nº 57/66 - Art. 15</h4><p>O disposto no art. 32 da Lei nº 5.172, de 25 de outubro de 1966, não abrange o imóvel de que, comprovadamente, seja utilizado em exploração extrativa vegetal, agrícola, pecuária ou agro-industrial...</p></div><div><h4>Lei nº 5.172/66 (CTN) - Art. 32</h4><p>O impôsto, de competência dos Municípios, sôbre a propriedade predial e territorial urbana tem como fato gerador a propriedade, o domínio útil ou a posse de bem imóvel...</p></div>`;
+                    break;
+                // NOVOS CASOS PARA A.2
+                case 'InquilinatoRural':
+                    articlesHTML = `<div><h4>Lei nº 8.245/91 - Art. 1º</h4><p>A locação de imóvel urbano regula-se pelo disposto nesta lei:<br>Parágrafo único. Continuam regulados pelo Código Civil e pelas leis especiais:<br>a) as locações:<br>1. de imóveis de propriedade da União, dos Estados e dos Municípios, de suas autarquias e fundações públicas;<br>2. de vagas autônomas de garagem ou de espaços para estacionamento de veículos;<br>3. de espaços destinados à publicidade;<br>4. em apart-hotéis, hotéis - residência ou equiparados, assim considerados aqueles que prestam serviços regulares a seus usuários e como tais sejam autorizados a funcionar;<br>b) o arrendamento mercantil, em qualquer de suas modalidades.</p></div>`;
+                    break;
+                case 'JurisprudenciaRural':
+                    articlesHTML = `
+                        <div><h4>1. Lex specialis: Lei 8.245/1991 é o regime principal</h4><p>O art. 1º da própria Lei do Inquilinato declara que ela “regula a locação de imóvel urbano”, e em seu parágrafo único apenas exclui algumas hipóteses muito específicas (imóvel público, vagas de garagem, apart-hotel etc.), remetendo-as então ao Código Civil ou a leis especiais. Quando a relação envolve imóvel situado em zona rural mas destinado exclusivamente à moradia do locatário, a jurisprudência entende que a finalidade residencial “urbaniza” a relação e atrai a Lei 8.245/91. Exemplo: Agravo de Instrumento julgado pelo TJ-SP que aplicou a Lei 8.245 a despejo de casa em sítio, porque “o fator preponderante é a utilização, não a localização geográfica”.</p></div>
+                        <div><h4>2. Código Civil (arts. 565-578) opera só de forma subsidiária</h4><p>A doutrina civilista é pacífica em qualificar a disciplina do Código Civil como regra residual: só se recorre a ela se a locação não estiver dentro do âmbito material da Lei do Inquilinato ou quando houver lacuna na lei especial. Na prática: Prazo, denúncia cheia, ações de despejo, garantias, direito de preferência etc. → seguem a Lei 8.245. Pontos não regulados (ex.: obrigação de reparar vícios ocultos antes da entrega, art. 567 CC) → CC aplica-se supletivamente, desde que não conflite com o regime especial.</p></div>
+                        <div><h4>3. Jurisprudência superior confirma a hierarquia</h4><p>A Terceira Turma do STJ, no REsp 1.475.477, reiterou que, havendo contrato com cláusula de locação, a Lei 8.245 é preferencial e o Código Civil apenas complementa “de forma harmônica” quando necessário.</p></div>
+                        <div><h4>4. Quando o Código Civil volta a ser primário?</h4><p>Somente se o contrato não se enquadrar na Lei 8.245 — por exemplo, locação de equipamentos agrícolas, de vaga de estacionamento isolada, ou se o imóvel for público. Para imóveis rurais, se houver exploração agropecuária, deixa-se de falar em locação e ingressa-se no arrendamento rural (Estatuto da Terra + Dec. 59.566/66).</p></div>
+                        <div><h4>Conclusão</h4><p>Portanto, em locação residencial situada em área rural: Lei do Inquilinato = norma principal (lex specialis); Código Civil (locação de coisas) = aplicação subsidiária e apenas se e onde a Lei 8.245/91 for omissa.</p></div>
+                    `;
+                    break;
+                default:
+                    articlesHTML = `<div><p>Conteúdo de exemplo para ${lawName}.</p></div>`;
+            }
+            return { success: true, data: articlesHTML };
+        }
+
+        async function toggleArticles(lawName, containerId, button) {
+            const container = document.getElementById(containerId);
+            const buttonText = button.querySelector('.button-text');
+            const loader = button.querySelector('.loader');
+            const originalText = button.getAttribute('data-original-text') || buttonText.textContent;
+            button.setAttribute('data-original-text', originalText);
+            if (container.classList.contains('show')) {
+                container.classList.remove('show');
+                buttonText.textContent = originalText;
+                return;
+            }
+            if (container.innerHTML.trim() !== '') {
+                container.classList.add('show');
+                buttonText.textContent = 'Ocultar Artigos';
+                return;
+            }
+            buttonText.classList.add('hidden');
+            loader.classList.remove('hidden');
+            await new Promise(resolve => setTimeout(resolve, 500)); 
+            const result = getMockArticles(lawName);
+            let contentHTML;
+            if (result.success) {
+                const closeButtonHTML = `<button onclick="
+                        const container = document.getElementById('${containerId}');
+                        const button = container.closest('.shadow-lg, .p-4.bg-teal-50, .rounded-xl').querySelector('[onclick*=\\'${containerId}\\']');
+                        const buttonText = button.querySelector('.button-text');
+                        container.classList.remove('show');
+                        buttonText.textContent = button.getAttribute('data-original-text');
+                    " class="absolute top-3 right-3 w-8 h-8 bg-slate-200 text-slate-600 rounded-full flex items-center justify-center hover:bg-slate-300 hover:text-slate-800 transition-all text-lg font-bold">
+                        &times;
+                    </button>`;
+                contentHTML = `<div class="relative p-4 md:p-6 article-content">${closeButtonHTML}${result.data}</div>`;
+                buttonText.textContent = 'Ocultar Artigos';
+            } else {
+                contentHTML = `<div class="p-4">${result.data}</div>`;
+                buttonText.textContent = originalText;
+            }
+            container.innerHTML = contentHTML;
+            loader.classList.add('hidden');
+            buttonText.classList.remove('hidden');
+            container.classList.add('show');
+        }
+        window.toggleArticles = toggleArticles;
+    });
+    </script>
+</body>
+</html>
