@@ -272,7 +272,8 @@
             if (result.success) {
                 const closeButtonHTML = `<button onclick="
                         const container = document.getElementById('${containerId}');
-                        const button = container.closest('.shadow-lg, .p-4.bg-teal-50, .rounded-xl').querySelector('[onclick*=\\'${containerId}\\']');
+                        const card = container.closest('.shadow-lg.rounded-xl.bg-white');
+                        const button = card.querySelector('[onclick*=\\'${containerId}\\']');
                         const buttonText = button.querySelector('.button-text');
                         container.classList.remove('show');
                         buttonText.textContent = button.getAttribute('data-original-text');
