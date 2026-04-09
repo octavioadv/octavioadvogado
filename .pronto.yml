@@ -1,0 +1,5 @@
+runners:
+  - eslint_npm
+
+eslint_npm:
+  cmd: npx eslint
